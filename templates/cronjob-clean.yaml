@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: zabbix-nodesclean
+  labels:
+    app: zabbix-nodesclean
+spec:
+  schedule: "0/5 * * * *"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 86400
+      template:
+        spec:
+          containers:
+          - name: zabbix-nodesclean
+            image: postgres:14
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/bash
+            - -c
+            - echo "deleting all stopped and unavailable HANodes older than 3600 seconds..." && psql -c "SET SCHEMA 'zabbix'; delete from ha_node where status in (1,2) and extract(epoch from now())-lastaccess>600"
+            env:
+              - name: PGHOST
+                value: "postgresql-local.monitoring.svc.cluster.local"
+              - name: PGPORT
+                value: "5432"
+              - name: PGUSER
+                value: "dftzbx"
+              - name: "PGPASSWORD"
+                value: "ZabbixZabbix"
+                # valueFrom:
+                #   secretKeyRef:
+                #     name: zabbix-secrets
+                #     key: POSTGRES_PASSWORD
+              - name: PGDATABASE
+                value: "db_zabbix"
+          restartPolicy: OnFailure
