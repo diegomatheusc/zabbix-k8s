@@ -9,7 +9,7 @@ db_access:
  
   db_server_host: "postgresql-local.monitoring.svc.cluster.local"
   db_server_port: "5432"
-  postgres_user: "dftzbx"
+  postgres_user: "diegozbx"
 
   postgres_password: "ZabbixZabbix"
   postgres_db: "db_zabbix"
