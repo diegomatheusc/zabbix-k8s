@@ -2,7 +2,6 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Version: 3.4.4](https://img.shields.io/badge/Version-3.4.4-informational?style=flat-square)
 
-Zabbix is a mature and effortless enterprise-class open source monitoring solution for network monitoring and application monitoring of millions of metrics.
 Versão pré PR no repositório oficial, com os seguintes ajustes:
 
 - Adição de env para escolha do schema do banco.
